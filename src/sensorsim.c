@@ -11,9 +11,7 @@ struct timeval start;
 
 unsigned short white_noise(unsigned long microsecond)
 {
-    //@Todo: Replace with white noise from random.org
-    return microsecond % 255;
-    
+  return random_ushort(microsecond);
 }
 
 unsigned short anomaly_parabel(unsigned long microsecond)
