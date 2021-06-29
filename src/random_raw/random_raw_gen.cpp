@@ -14,7 +14,7 @@ int main()
   out << "#ifndef RANDOM_RAW_C\n";
   out << "#define RANDOM_RAW_C\n\n";
   out << "// This file is generated - do not edit\n\n";
-  out << "char random_data[] = {";
+  out << "unsigned char random_data[] = {";
   while (in >> str)
   {
     if (count != 0) out << ", ";
