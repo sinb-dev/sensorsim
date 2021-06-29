@@ -18,7 +18,7 @@ unsigned short white_noise(size_t microsecond)
 unsigned short anomaly_parabel(size_t microsecond)
 {
     double parable_x = round(microsecond / 200.0) * 200;
-    double x = microsecond - parable_x;// % 200 + 100;
+    double x = microsecond - parable_x;
     double a = -16.0;
     double b = 0;
     double c = 1024;
@@ -29,12 +29,10 @@ unsigned short anomaly_parabel(size_t microsecond)
 
 unsigned short getreading(size_t microsecond)
 {
-    //Start with white noise
     unsigned short value = 0;
     value += white_noise(microsecond);
     value += anomaly_parabel(microsecond);
     return value;
 }
-
 
 #endif
