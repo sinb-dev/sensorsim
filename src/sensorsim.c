@@ -15,7 +15,7 @@ unsigned short white_noise(size_t microsecond)
   return random_ushort(microsecond);
 }
 
-unsigned short anomaly_parabel(size_t microsecond)
+unsigned short harmonics_peak(size_t microsecond)
 {
     double parable_x = round(microsecond / 200.0) * 200;
     double x = microsecond - parable_x;
@@ -31,7 +31,7 @@ unsigned short getreading(size_t microsecond)
 {
     unsigned short value = 0;
     value += white_noise(microsecond);
-    value += anomaly_parabel(microsecond);
+    value += harmonics_peak(microsecond);
     return value;
 }
 
