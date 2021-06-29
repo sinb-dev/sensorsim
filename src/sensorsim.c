@@ -6,6 +6,7 @@
 #include <math.h>
 #include <sys/time.h>
 #include "netcode.c"
+#include "random.c"
 
 struct timeval start;
 

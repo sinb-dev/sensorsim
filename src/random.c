@@ -2,6 +2,7 @@
 #define RANDOM_C
 
 #include <assert.h>
+#include <stdint.h>
 
 #include "random_raw/random_raw.c"
 
