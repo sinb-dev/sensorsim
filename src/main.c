@@ -14,36 +14,30 @@ int kbhit()
     return select(1, &fds, NULL, NULL, &tv);
 }
 
-void mainloop(void) 
+void flushbuffer()
 {
     export();
-/*
-    gettimeofday(&start, NULL);
-    struct timeval now;
-    
-    unsigned long freq = 0;
+    buf_pos = 0;
+}
 
-    while(1)
-    {
-        sleep(0.00004);
-        gettimeofday(&now, NULL);
-        long delta = now.tv_sec * 1000000 + now.tv_usec 
-            - start.tv_sec * 1000000 + start.tv_usec;
-
-        //char r = getreading(delta);
-        
-        if(kbhit())
-        {
-            break;
+void mainloop(void) 
+{   
+    size_t duration = 100000;
+    int cycle_mksec = 60;
+     
+    printf("Starting main loop\n");
+    for (size_t time = 0; time < duration; time+=cycle_mksec) {
+        unsigned short val = getreading(time);
+        buf_readings[buf_pos] = val;
+        buf_timetamps[buf_pos] = time;
+        if (buf_pos == BUFFERSIZE) {
+            flushbuffer();
+        } else {
+            buf_pos++;
         }
-        freq++;
     }
+    printf("Completed\n");
 
-    
-    int delta = now.tv_sec - start.tv_sec;
-    int cycles_per_sec = freq/delta;
-    printf("Reached %ld cycles in %d seconds. Speed: %d readings/sec", freq, delta, cycles_per_sec);
-    */
 }
 
 int main(void)
