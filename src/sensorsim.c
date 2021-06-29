@@ -7,13 +7,6 @@
 #include <sys/time.h>
 #include "netcode.c"
 #include "random.c"
-#define BUFFERSIZE 1024
-
-struct timeval start;
-
-unsigned short buf_readings[BUFFERSIZE];
-size_t buf_timetamps[BUFFERSIZE];
-int buf_pos = 0;
 
 unsigned short white_noise(size_t microsecond)
 {
@@ -22,9 +15,9 @@ unsigned short white_noise(size_t microsecond)
 
 unsigned short harmonics_peak(size_t microsecond)
 {
-    double parable_x = round(microsecond / 200.0) * 200;
+    double parable_x = round(microsecond / 400.0) * 400;
     double x = microsecond - parable_x;
-    double a = -4.5;
+    double a = -16.5;
     double b = 0;
     double c = 1024;
 
