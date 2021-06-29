@@ -48,9 +48,9 @@ unsigned short getreading(size_t microsecond)
       switch(random_uint8(microsecond) & 0x04)
       {
         case 0:
-          [[fallthrough]]
+          __attribute__((fallthrough));
         case 1:
-          [[fallthrough]]
+          __attribute__((fallthrough));
         case 2:
           value *= 2;
           break;
