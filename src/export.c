@@ -15,6 +15,8 @@ void export()
         unsigned short val = getreading(time);
         fprintf(exportfp, "%hu;", val);
     }
+
+    // @TODO: file descriptor leaks - needs an fclose somewhere
 }
 
 #endif
