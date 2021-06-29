@@ -11,7 +11,7 @@ void export()
         exportfp = fopen("data.csv", "w");
     }
     fprintf(exportfp, "time,reading\n");
-    for (int i = 0; i < BUFFERSIZE; i++) {
+    for (int i = 1; i < BUFFERSIZE; i++) {
         fprintf(exportfp, "%lu,%hu\n", buf_timetamps[i], buf_readings[i]);
     }
 
