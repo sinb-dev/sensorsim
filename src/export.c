@@ -11,12 +11,20 @@ void export()
         exportfp = fopen("data.csv", "w");
     }
     
-    for (size_t time = 0; time < 1000; time++) {
-        unsigned short val = getreading(time);
-        fprintf(exportfp, "%hu;", val);
+    for (int i = 0; i < BUFFERSIZE; i++) {
+        fprintf(exportfp, "%lu;%hu;\n", buf_timetamps[i], buf_readings[i]);
     }
 
-    // @TODO: file descriptor leaks - needs an fclose somewhere
+    fprintf(exportfp, "\n");
+    for (int i = 0; i < BUFFERSIZE; i++) {
+    }
+
+    //for (size_t time = 0; time < 1000; time++) {
+        //unsigned short val = getreading(time);
+        //fprintf(exportfp, "%hu;", val);
+    //}
+
+    fclose(exportfp);
 }
 
 #endif
