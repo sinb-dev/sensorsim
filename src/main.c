@@ -1,6 +1,8 @@
+
 #include "netcode.c"
 #include "sensorsim.c"
-
+#include "export.c"
+#include <unistd.h>
 
 //Non-blocking keyboard read
 int kbhit()
@@ -14,7 +16,9 @@ int kbhit()
 
 void mainloop(void) 
 {
-    gettimeofday(&sensorsim.start, NULL);
+    export();
+/*
+    gettimeofday(&start, NULL);
     struct timeval now;
     
     unsigned long freq = 0;
@@ -24,10 +28,10 @@ void mainloop(void)
         sleep(0.00004);
         gettimeofday(&now, NULL);
         long delta = now.tv_sec * 1000000 + now.tv_usec 
-            - sensorsim.start.tv_sec * 1000000 + sensorsim.start.tv_usec;
+            - start.tv_sec * 1000000 + start.tv_usec;
 
-        char r = getreading(delta);
-
+        //char r = getreading(delta);
+        
         if(kbhit())
         {
             break;
@@ -35,9 +39,11 @@ void mainloop(void)
         freq++;
     }
 
-    int delta = now.tv_sec - sensorsim.start.tv_sec;
+    
+    int delta = now.tv_sec - start.tv_sec;
     int cycles_per_sec = freq/delta;
     printf("Reached %ld cycles in %d seconds. Speed: %d readings/sec", freq, delta, cycles_per_sec);
+    */
 }
 
 int main(void)
