@@ -13,24 +13,24 @@ int kbhit()
     FD_SET(0, &fds);
     return select(1, &fds, NULL, NULL, &tv);
 }
-
 void flushbuffer()
 {
-    export();
+    //export();
     buf_pos = 0;
 }
 
 void mainloop(void) 
 {   
-    size_t duration = 100000;
-    int cycle_mksec = 60;
+    size_t duration = 200000;
+    int cycle_mksec = 40;
      
     printf("Starting main loop\n");
     for (size_t time = 0; time < duration; time+=cycle_mksec) {
         unsigned short val = getreading(time);
         buf_readings[buf_pos] = val;
         buf_timetamps[buf_pos] = time;
-        if (buf_pos == BUFFERSIZE) {
+        
+        if (buf_pos >= BUFFERSIZE) {
             flushbuffer();
         } else {
             buf_pos++;

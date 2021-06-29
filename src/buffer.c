@@ -5,5 +5,5 @@
 
 unsigned short buf_readings[BUFFERSIZE];
 size_t buf_timetamps[BUFFERSIZE];
-int buf_pos = 0;
+unsigned int buf_pos = 0;
 #endif
