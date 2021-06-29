@@ -27,12 +27,42 @@ unsigned short harmonics_peak(size_t microsecond)
 
 unsigned short getreading(size_t microsecond)
 {
-    unsigned short value = 0;
-    //Random white noise 
-    value += white_noise(microsecond);
-    //Harmonic peaks are not dangerous. They are natural and expected.
-    value += harmonics_peak(microsecond);
-    return value;
+  // Add white noise to the reading as baseline
+  unsigned short value = white_noise(microsecond);
+
+  //Add harmonic peaks. These are expected for proper functioning devices.
+  value += harmonics_peak(microsecond);
+
+  // The time the device starts malfunctioning.
+  size_t malfunction_threshold = random_uint8(0) * 80;
+
+  if (microsecond > malfunction_threshold)
+  {
+    // Device is old. Introduce pathological behaviour into the simulation.
+    size_t malfunction_age = microsecond - malfunction_threshold;
+
+    // The more time has passed since the malfunction threshold, the greater
+    // the propability of erratic behaviour in the readings.
+    if (random_uint16(microsecond) < malfunction_age) 
+    {
+      switch(random_uint8(microsecond) & 0x04)
+      {
+        case 0:
+          [[fallthrough]]
+        case 1:
+          [[fallthrough]]
+        case 2:
+          value *= 2;
+          break;
+        case 3:
+          value *= 3;
+          break;
+      }
+      
+    }
+  }
+
+  return value;
 }
 
 #endif
