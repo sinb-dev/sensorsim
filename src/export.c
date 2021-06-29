@@ -1,7 +1,7 @@
 #ifndef EXPORT_C
 #define EXPORT_C
 #include<stdio.h>
-#include<buffer.c>
+#include "buffer.c"
 
 FILE *exportfp = NULL;
 
