@@ -10,12 +10,12 @@
 
 struct timeval start;
 
-unsigned short white_noise(unsigned long microsecond)
+unsigned short white_noise(size_t microsecond)
 {
   return random_ushort(microsecond);
 }
 
-unsigned short anomaly_parabel(unsigned long microsecond)
+unsigned short anomaly_parabel(size_t microsecond)
 {
     double parable_x = round(microsecond / 200.0) * 200;
     double x = microsecond - parable_x;// % 200 + 100;
@@ -27,7 +27,7 @@ unsigned short anomaly_parabel(unsigned long microsecond)
     return y > 0 ? y : 0;
 }
 
-unsigned short getreading(unsigned long microsecond)
+unsigned short getreading(size_t microsecond)
 {
     //Start with white noise
     unsigned short value = 0;

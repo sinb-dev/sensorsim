@@ -11,8 +11,8 @@ void export()
         exportfp = fopen("data.csv", "w");
     }
     
-    for (unsigned long mksec = 0; mksec < 1000; mksec++) {
-        unsigned short val = getreading(mksec);
+    for (size_t time = 0; time < 1000; time++) {
+        unsigned short val = getreading(time);
         fprintf(exportfp, "%hu;", val);
     }
 }
