@@ -1,7 +1,7 @@
 #ifndef RANDOM_C
 #define RANDOM_C
 
-#include "random_raw.c"
+#include "random_raw/random_raw.c"
 
 static inline char random_char(size_t time)
 {
