@@ -5,7 +5,7 @@
 
 #include "../sensorsim.c"
 
-LARGE_INTEGER qp_freq, qp_start;
+LARGE_INTEGER qp_freq, qp_start, qp_stop;
 
 static inline void stopwatch_init()
 {
@@ -17,25 +17,18 @@ static inline void stopwatch_start()
   QueryPerformanceCounter(&qp_start);
 }
 
-static inline void stopwatch(LARGE_INTEGER* li)
+static inline void stopwatch_stop()
 {
-  QueryPerformanceCounter(li);
+  QueryPerformanceCounter(&qp_stop);
 }
 
-static inline size_t stopwatch_us(LARGE_INTEGER* stop)
+static inline size_t stopwatch_us()
 {
-  return (stop->QuadPart - qp_start.QuadPart) * 1000000 / qp_freq.QuadPart;
+  return (qp_stop.QuadPart - qp_start.QuadPart) * 1000000 / qp_freq.QuadPart;
 }
 
-#define RIGHT_JUSTIFICATION 40
-
-typedef struct {
-  unsigned short data;
-  LARGE_INTEGER timestamp;
-} sample_t;
-
-#define SAMPLE_SIZE 25000
-sample_t samples[SAMPLE_SIZE];
+#define SAMPLE_SIZE 20000000
+unsigned short data[SAMPLE_SIZE];
 
 static void indent(unsigned int num)
 {
@@ -45,21 +38,12 @@ static void indent(unsigned int num)
   }
 }
 
+#define RIGHT_JUSTIFICATION 40
+
 static void print_sample_result(int x)
 {
   for(int i = x; i < RIGHT_JUSTIFICATION; ++i) printf(" ");
-
-  size_t min = UINT64_MAX;
-  size_t max = 0;
-  size_t sum = 0;
-  for(int i = 0; i < SAMPLE_SIZE; ++i)
-  {
-    size_t time = stopwatch_us(&samples[i].timestamp);
-    if (time < min) min = time;
-    if (time > max) max = time;
-    sum += time;
-  }
-  printf("%uus / %uus / %uus\n", min, sum/25000, max);
+  printf("%uus\n", stopwatch_us());
 }
 
 int main()
@@ -67,44 +51,55 @@ int main()
   printf("Sample size: %u\n\n", SAMPLE_SIZE);
   stopwatch_init();
 
+
+
   printf("white_noise:");
   for(size_t i = 0; i < SAMPLE_SIZE; ++i)
   {
-    samples[i].data = white_noise(i);
+    data[i] = white_noise(i);
   }
   stopwatch_start();
   for(size_t i = 0; i < SAMPLE_SIZE; ++i)
   {
-    samples[i].data = white_noise(i);
-    stopwatch(&(samples[i].timestamp));
+    data[i] = white_noise(i);
   }
+  stopwatch_stop();
   print_sample_result(12);
+
+
 
   printf("harmonics_peak:");
   for(size_t i = 0; i < SAMPLE_SIZE; ++i)
   {
-    samples[i].data = harmonics_peak(i);
+    data[i] = harmonics_peak(i);
   }
   stopwatch_start();
   for(size_t i = 0; i < SAMPLE_SIZE; ++i)
   {
-    samples[i].data = harmonics_peak(i);
-    stopwatch(&(samples[i].timestamp));
+    data[i] = harmonics_peak(i);
   }
+  stopwatch_stop();
   print_sample_result(15);
+
+
 
   printf("\ngetreading:");
   for(size_t i = 0; i < SAMPLE_SIZE; ++i)
   {
-    samples[i].data = getreading(i);
+    data[i] = getreading(i);
   }
   stopwatch_start();
   for(size_t i = 0; i < SAMPLE_SIZE; ++i)
   {
-    samples[i].data = getreading(i);
-    stopwatch(&(samples[i].timestamp));
+    data[i] = getreading(i);
   }
+  stopwatch_stop();
   print_sample_result(11);
+
+
+
+  size_t time_25000 = stopwatch_us() / SAMPLE_SIZE * 25000;
+  printf("\nEstimate time for 25000 samples: %ums.\n", time_25000 / 1000);
 
   return 0;
 }
