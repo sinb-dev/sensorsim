@@ -8,20 +8,40 @@
 #include "netcode.c"
 #include "random.c"
 
+// Defines how much white noise the signal has.
+#define WHITE_NOISE_AMPLITUDE 255
+
+// Defines how large the harmonic peaks can be.
+#define HARMONIC_PEAK_AMPLITUDE 1024
+
+// Defines the distance between harmonic peaks.
+#define HARMONIC_PEAK_DISTANCE 400
+
+// Defines the width of the harmonic peaks.
+#define HARMONIC_PEAK_WIDTH 16.5
+
+// Defines the minimum age, at which the device begins to fault.
+#define MALFUNCTION_THRESHOLD_MINIMUM 0
+
+// Defines how much the malfunction threshold varies from one device to another.
+// Bigger equals more variety.
+#define MALFUNCTION_THRESHOLD_VARIATION 80
+
+//-------------------------------------------------------------------------//
+
 unsigned short white_noise(size_t microsecond)
 {
-  return random_ushort(microsecond) % 255;
+  return random_ushort(microsecond) % WHITE_NOISE_AMPLITUDE;
 }
 
 unsigned short harmonics_peak(size_t microsecond)
 {
-    double parable_x = round(microsecond / 400.0) * 400;
+    double parable_x = round(microsecond / (double)HARMONIC_PEAK_DISTANCE) * HARMONIC_PEAK_DISTANCE;
     double x = microsecond - parable_x;
-    double a = -16.5;
-    double b = 0;
-    double c = 1024;
+    double a = -HARMONIC_PEAK_WIDTH;
+    double c = HARMONIC_PEAK_AMPLITUDE;
 
-    double y = a*x*x + b*x + c;
+    double y = a*x*x + c;
     return y > 0 ? y : 0;
 }
 
@@ -34,7 +54,7 @@ unsigned short getreading(size_t microsecond)
   value += harmonics_peak(microsecond);
 
   // The time the device starts malfunctioning.
-  size_t malfunction_threshold = random_uint8(0) * 80;
+  size_t malfunction_threshold = MALFUNCTION_THRESHOLD_MINIMUM + random_uint8(0) * MALFUNCTION_THRESHOLD_VARIATION;
 
   if (microsecond > malfunction_threshold)
   {
