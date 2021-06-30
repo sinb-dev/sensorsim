@@ -36,7 +36,7 @@ unsigned short white_noise(size_t time)
 
 unsigned short harmonics_peak(size_t time)
 {
-    double parable_x = round(time / (double)HARMONIC_PEAK_DISTANCE) * HARMONIC_PEAK_DISTANCE;
+    double parable_x = (int)(0.5 + time / (double)HARMONIC_PEAK_DISTANCE) * HARMONIC_PEAK_DISTANCE;
     double x = time - parable_x;
     double a = -HARMONIC_PEAK_WIDTH;
     double c = HARMONIC_PEAK_AMPLITUDE;
