@@ -26,12 +26,20 @@ src/random_raw/random_raw.c: random_raw_gen$(EXECUTABLE_SUFFIX)
 random_raw_gen$(EXECUTABLE_SUFFIX):
 	g++ src/random_raw/random_raw_gen.cpp -o random_raw_gen$(EXECUTABLE_SUFFIX)
 
+perf: sensorsim-perf$(EXECUTABLE_SUFFIX)
+	$(CURRENT_DIR)sensorsim-perf$(EXECUTABLE_SUFFIX)
+
+sensorsim-perf$(EXECUTABLE_SUFFIX): src/random_raw/random_raw.c
+	gcc src/perf/perf_win32.c -o $@ -O3
+
 clean:
 	$(RM) sensorsim-posix-debug
 	$(RM) sensorsim-win32-debug.exe
+	$(RM) sensorsim-perf
+	$(RM) sensorsim-perf.exe
 	$(RM) random_raw_gen$(EXECUTABLE_SUFFIX)
 	$(RM) src\random_raw\random_raw.c
 	$(RM) sim.log
 	$(RM) data.csv
 
-.PHONY: default clean
+.PHONY: default clean perf
