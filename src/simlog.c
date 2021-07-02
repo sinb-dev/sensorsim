@@ -17,14 +17,14 @@ void simlog_write(char *message, int type) {
     assert(logfp != NULL);
     
     if (logfp == NULL) return;
-    char *prefix;
+    const char *prefix;
     time_t curtime;
     struct tm *loc_time;
     char formatted_date[TFLEN];
     switch(type) {
-        case SIMLOG_INFO: prefix = (char*)SIMLOG_INFO_PREFIX; break;
-        case SIMLOG_WARN: prefix = (char*)SIMLOG_WARN_PREFIX; break;
-        case SIMLOG_ERROR: prefix = (char*)SIMLOG_ERROR_PREFIX; break;
+        case SIMLOG_INFO: prefix = SIMLOG_INFO_PREFIX; break;
+        case SIMLOG_WARN: prefix = SIMLOG_WARN_PREFIX; break;
+        case SIMLOG_ERROR: prefix = SIMLOG_ERROR_PREFIX; break;
         default: prefix = "[???]"; break;
     }
 
