@@ -38,16 +38,9 @@ void simlog_write(char *message, int type) {
 
     fprintf(logfp, "[%s][%19s]%s\n", prefix, formatted_date, message);
 }
-void info(char* message)
-{
-    simlog_write(message, SIMLOG_INFO);
-}
-void warn(char* message)
-{
-    simlog_write(message, SIMLOG_WARN);
-}
-void error(char* message)
-{
-    simlog_write(message, SIMLOG_ERROR);
-}
+
+#define info(message) simlog_write(message, SIMLOG_INFO);
+#define warn(message) simlog_write(message, SIMLOG_WARN);
+#define error(message) simlog_write(message, SIMLOG_ERROR);
+
 #endif
