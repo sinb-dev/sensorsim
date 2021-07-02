@@ -11,22 +11,11 @@ const char* SIMLOG_INFO_PREFIX = "INFO";
 const char* SIMLOG_WARN_PREFIX = "WARN";
 const char* SIMLOG_ERROR_PREFIX = "ERROR";
 
-FILE *logfp = NULL;
-
-void simlog_open() {
-    if (logfp == NULL) {
-        logfp = fopen("sim.log", "a");
-    }
-}
-void simlog_close() {
-    if (logfp != NULL) {
-        fclose(logfp);
-        logfp = NULL;
-    }
-}
+FILE *logfp;
 
 void simlog_write(char *message, int type) {
-    simlog_open(); 
+    assert(logfp != NULL);
+    
     if (logfp == NULL) return;
     char *prefix;
     time_t curtime;

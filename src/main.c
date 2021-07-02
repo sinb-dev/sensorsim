@@ -1,9 +1,11 @@
+#include <assert.h>
+#include <unistd.h>
 
 #include "simlog.c"
 #include "netcode.c"
 #include "sensorsim.c"
 #include "export.c"
-#include <unistd.h>
+
 
 //Non-blocking keyboard read
 int kbhit()
@@ -46,10 +48,22 @@ void mainloop(void)
 
 int main(void)
 {
+    logfp = fopen("sim.log", "a");
+    if (logfp == NULL)
+    {
+        fprintf(stderr, "Failed to open sim.log for writing.\n");
+        return EXIT_FAILURE;
+    }
+
     srand(100);
     
     mainloop();
+
+    assert(logfp != NULL)
+    fclose(logfp);
     
+    assert(exportfp != NULL)
     fclose(exportfp);
-    return 0;
+    
+    return EXIT_SUCCESS;
 }
