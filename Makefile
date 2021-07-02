@@ -15,10 +15,10 @@ endif
 default: $(DEFAULT_TARGET)$(EXECUTABLE_SUFFIX)
 
 sensorsim-posix-debug: src/random_raw/random_raw.c
-	gcc src/main.c -o $@ -g -DPOSIX -DDEBUG
+	gcc src/main.c -o $@ -g -DPOSIX -DDEBUG  -Wall -Wextra -Werror -Wfatal-errors -Wpedantic -Wno-unused-variable -Wno-unused-argument -Wno-unused-parameter -Wno-
 
 sensorsim-win32-debug.exe: src/random_raw/random_raw.c
-	gcc src/main.c -o $@ -g -DWIN32 -DDEBUG
+	gcc src/main.c -o $@ -g -DWIN32 -DDEBUG -Wall -Wextra -Werror -Wfatal-errors -Wpedantic -Wno-unused-variable -Wno-unused-argument -Wno-unused-parameter -Wno-unused-function
 
 src/random_raw/random_raw.c: random_raw_gen$(EXECUTABLE_SUFFIX)
 	$(CURRENT_DIR)random_raw_gen$(EXECUTABLE_SUFFIX)
