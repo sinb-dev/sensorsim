@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-  ifstream in("raw.txt");
+  ifstream in("src/random_raw/raw.txt");
   ofstream out("src/random_raw/random_raw.c");
 
   size_t count = 0;

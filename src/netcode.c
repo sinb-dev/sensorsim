@@ -2,8 +2,13 @@
 #ifndef NETCODE_C
 #define NETCODE_C
 #include <stdio.h>
+#ifdef POSIX
 #include <sys/socket.h>
 #include <arpa/inet.h>
+#endif
+#ifdef WIN32
+#include <winsock2.h>
+#endif
 #include <unistd.h>
 #include <string.h>
 #define PORT 8080

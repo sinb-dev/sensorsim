@@ -1,12 +1,17 @@
 #include <assert.h>
+#ifdef POSIX
 #include <unistd.h>
+#endif
 
 #include "simlog.c"
+#ifdef POSIX
+// @TODO: Needs to be ported to Win32
 #include "netcode.c"
+#endif
 #include "sensorsim.c"
 #include "export.c"
 
-
+#ifdef POSIX
 //Non-blocking keyboard read
 int kbhit()
 {
@@ -16,11 +21,15 @@ int kbhit()
     FD_SET(0, &fds);
     return select(1, &fds, NULL, NULL, &tv);
 }
+#endif
 
 void flushbuffer()
 {
     export();
+    #ifdef POSIX
+    // @TODO: Remove #ifdef when netcode.c is ported
     netsend("Oh hai there");
+    #endif
     buf_pos = 0;
 }
 
@@ -35,7 +44,10 @@ void mainloop(void)
         unsigned short val = getreading(time);
         buf_readings[buf_pos] = val;
         buf_timetamps[buf_pos] = time;
+        #if 0
+        // @TODO: getrpm is not defined anywhere.
         buf_rpms[buf_pos] = getrpm(time);
+        #endif
         if (buf_pos >= BUFFERSIZE) {
             flushbuffer();
         } else {
@@ -59,10 +71,10 @@ int main(void)
     
     mainloop();
 
-    assert(logfp != NULL)
+    assert(logfp != NULL);
     fclose(logfp);
     
-    assert(exportfp != NULL)
+    assert(exportfp != NULL);
     fclose(exportfp);
     
     return EXIT_SUCCESS;

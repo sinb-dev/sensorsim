@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include <sys/time.h>
-#include "netcode.c"
 #include "random.c"
 
 // Defines how much white noise the signal has.

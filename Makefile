@@ -30,6 +30,8 @@ clean:
 	$(RM) sensorsim-posix-debug
 	$(RM) sensorsim-win32-debug.exe
 	$(RM) random_raw_gen$(EXECUTABLE_SUFFIX)
-	$(RM) src/random_raw/random_raw.c
+	$(RM) src\random_raw\random_raw.c
+	$(RM) sim.log
+	$(RM) data.csv
 
 .PHONY: default clean
