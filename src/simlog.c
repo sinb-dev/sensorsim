@@ -26,9 +26,7 @@ void simlog_close() {
 }
 
 void simlog_write(char *message, int type) {
-    if (logfp == NULL) {
-        simlog_open(); 
-    }
+    simlog_open(); 
     if (logfp == NULL) return;
     char *prefix;
     time_t curtime;
