@@ -43,7 +43,7 @@ static void indent(unsigned int num)
 static void print_sample_result(int x)
 {
   for(int i = x; i < RIGHT_JUSTIFICATION; ++i) printf(" ");
-  printf("%uus\n", stopwatch_us());
+  printf("%u us\n", stopwatch_us());
 }
 
 int main()
@@ -98,8 +98,8 @@ int main()
 
 
 
-  size_t time_25000 = stopwatch_us() / SAMPLE_SIZE * 25000;
-  printf("\nEstimate time for 25000 samples: %ums.\n", time_25000 / 1000);
+  double time_25000 = stopwatch_us() * 25000 / (double)SAMPLE_SIZE;
+  printf("\nEstimate time for 25000 samples: %.2f ms.\n", time_25000 / 1000);
 
   return 0;
 }
